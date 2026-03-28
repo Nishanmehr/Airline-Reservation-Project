@@ -36,7 +36,7 @@ public final class AddCustomer extends javax.swing.JInternalFrame {
         Class.forName("com.mysql.cj.jdbc.Driver");
 
         con = DriverManager.getConnection(
-                "jdbc:mysql://localhost/Airline_Project",
+                "jdbc:mysql://localhost/airline_project",
                 "root",
                 "Nishant@#12"
         );
@@ -356,7 +356,7 @@ public final class AddCustomer extends javax.swing.JInternalFrame {
             Class.forName("com.mysql.cj.jdbc.Driver");
             
             con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/Airline_Project",
+                    "jdbc:mysql://localhost/airline_project",
                     "root",
                     "Nishant@#12"
             );
