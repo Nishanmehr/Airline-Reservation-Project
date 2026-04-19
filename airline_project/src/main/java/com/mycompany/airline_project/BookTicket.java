@@ -1,0 +1,822 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
+ */
+package com.mycompany.airline_project;
+
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author nisha
+ */
+public class BookTicket extends javax.swing.JInternalFrame {
+
+    java.util.ArrayList<String> selectedSeats = new java.util.ArrayList<>();
+
+    public BookTicket() {
+        initComponents();
+        this.getContentPane().setBackground(Color.blue);
+        AutoID();
+        seatPanel.setLayout(new java.awt.GridLayout(4, 4, 10, 10));
+    }
+
+    String flightID;
+
+    public void AutoID() {
+        try {
+            Connection con;
+            PreparedStatement pre;
+            ResultSet rs;
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            con = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/Airline_Project",
+                    "root",
+                    "Nishant@#12");
+
+            pre = con.prepareStatement("SELECT MAX(TicketID) FROM Ticket");
+            rs = pre.executeQuery();
+            rs.next();
+
+            if (rs.getString(1) == null) {
+                ID.setText("TK001");
+            } else {
+                String maxId = rs.getString(1);
+                long id = Long.parseLong(maxId.substring(2));
+                id++;
+                ID.setText("TK" + String.format("%03d", id));
+            }
+
+        } catch (ClassNotFoundException ex) {
+            System.getLogger(BookTicket.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (SQLException ex) {
+            System.getLogger(BookTicket.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
+
+    // ✅ NEW HELPER METHOD: Har seat ke liye fresh unique TicketID generate karta hai
+    private String getNextTicketID(Connection con) throws SQLException {
+        PreparedStatement pre = con.prepareStatement("SELECT MAX(TicketID) FROM Ticket");
+        ResultSet rs = pre.executeQuery();
+        rs.next();
+        if (rs.getString(1) == null) {
+            return "TK001";
+        }
+        long id = Long.parseLong(rs.getString(1).substring(2));
+        id++;
+        return "TK" + String.format("%03d", id);
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        arrival = new javax.swing.JComboBox<>();
+        departure = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        ID = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        CustID = new javax.swing.JTextField();
+        firstName = new javax.swing.JTextField();
+        contact = new javax.swing.JTextField();
+        lastName = new javax.swing.JTextField();
+        fare = new javax.swing.JTextField();
+        totalticket = new javax.swing.JTextField();
+        gender = new javax.swing.JTextField();
+        Ans = new javax.swing.JTextField();
+        discount = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        seatPanel = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setClosable(true);
+
+        jPanel1.setBackground(new java.awt.Color(0, 51, 255));
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Departure");
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Search your Flights");
+
+        arrival.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Delhi", "Mumbai", "Bangalore", "Chennai","Kolkata" }));
+        arrival.addActionListener(this::arrivalActionPerformed);
+
+        departure.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Delhi", "Mumbai", "Bangalore", "Chennai","Kolkata" }));
+
+        jButton1.setText("Search");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Arrival");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(161, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(160, 160, 160))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(arrival, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(departure, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(51, 51, 51))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(210, 210, 210)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(arrival, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(departure, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(16, 16, 16))
+        );
+
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Fligh ID", "Flight Name", "Arrival", "Departure", "Date", "Duration"
+            }
+        ));
+        table.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tableAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(table);
+
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel4.setFont(new java.awt.Font("Microsoft YaHei", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("BOOK YOUR DREAM FLIGHT TICKET FOR YOU");
+
+        ID.setBackground(new java.awt.Color(255, 255, 255));
+        ID.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        ID.setForeground(new java.awt.Color(102, 255, 51));
+        ID.setText("ID");
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Arrival");
+
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Ticket ID:");
+
+        jPanel2.setBackground(new java.awt.Color(0, 51, 255));
+
+        jLabel10.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Customer Id");
+
+        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel11.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("First Name");
+
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel12.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Last Name");
+
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Contact");
+
+        jLabel14.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel14.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Gender");
+
+        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel15.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Fare");
+
+        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel16.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Total Ticket");
+
+        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel17.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Total Fare");
+
+        jLabel18.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel18.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Discount");
+
+        firstName.addActionListener(this::firstNameActionPerformed);
+
+        contact.addActionListener(this::contactActionPerformed);
+
+        lastName.addActionListener(this::lastNameActionPerformed);
+
+        fare.addActionListener(this::fareActionPerformed);
+
+        totalticket.addActionListener(this::totalticketActionPerformed);
+
+        gender.addActionListener(this::genderActionPerformed);
+
+        Ans.addActionListener(this::AnsActionPerformed);
+
+        discount.addActionListener(this::discountActionPerformed);
+
+        jButton2.setText("Search");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+
+        jButton3.setText("Calculate Fare");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
+
+        jButton4.setText("Book ");
+        jButton4.addActionListener(this::jButton4ActionPerformed);
+
+        jButton5.setText("Cancel");
+        jButton5.addActionListener(this::jButton5ActionPerformed);
+
+        seatPanel.setBackground(new java.awt.Color(255, 255, 255));
+        seatPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, java.awt.Color.black));
+        seatPanel.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout seatPanelLayout = new javax.swing.GroupLayout(seatPanel);
+        seatPanel.setLayout(seatPanelLayout);
+        seatPanelLayout.setHorizontalGroup(
+            seatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 296, Short.MAX_VALUE)
+        );
+        seatPanelLayout.setVerticalGroup(
+            seatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 261, Short.MAX_VALUE)
+        );
+
+        jLabel5.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Select Seats");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(discount, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Ans, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(fare, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(contact, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lastName, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(30, 30, 30)
+                                .addComponent(CustID, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jButton2)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel13)
+                                            .addComponent(jLabel12)))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(7, 7, 7)
+                                        .addComponent(jLabel16)))
+                                .addGap(24, 24, 24)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(totalticket, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(gender, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton3)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(seatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton4)
+                                .addGap(57, 57, 57)
+                                .addComponent(jButton5)))))
+                .addGap(136, 136, 136))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(CustID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel12)
+                        .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel11))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(totalticket, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(contact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(fare, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel14)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel15)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Ans, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17)
+                            .addComponent(jButton3))))
+                .addGap(34, 34, 34)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(discount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(seatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(ID)
+                        .addGap(0, 565, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(306, 306, 306))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(494, 494, 494)
+                    .addComponent(jLabel6)
+                    .addContainerGap(684, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ID)
+                    .addComponent(jLabel3))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(211, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(284, 284, 284)
+                    .addComponent(jLabel6)
+                    .addContainerGap(471, Short.MAX_VALUE)))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void firstNameActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_firstNameActionPerformed
+    }// GEN-LAST:event_firstNameActionPerformed
+
+    private void contactActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_contactActionPerformed
+    }// GEN-LAST:event_contactActionPerformed
+
+    private void lastNameActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_lastNameActionPerformed
+    }// GEN-LAST:event_lastNameActionPerformed
+
+    private void fareActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_fareActionPerformed
+    }// GEN-LAST:event_fareActionPerformed
+
+    private void totalticketActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_totalticketActionPerformed
+    }// GEN-LAST:event_totalticketActionPerformed
+
+    private void genderActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_genderActionPerformed
+    }// GEN-LAST:event_genderActionPerformed
+
+    private void AnsActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_AnsActionPerformed
+    }// GEN-LAST:event_AnsActionPerformed
+
+    private void discountActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_discountActionPerformed
+    }// GEN-LAST:event_discountActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton5ActionPerformed
+        this.setVisible(false);
+    }// GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            String Arrival = arrival.getSelectedItem().toString();
+            String Departure = departure.getSelectedItem().toString();
+
+            Connection con;
+            PreparedStatement pre;
+            ResultSet rs;
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            con = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/Airline_Project",
+                    "root",
+                    "Nishant@#12");
+            pre = con.prepareStatement("SELECT * FROM Flight WHERE Arrival=? and Departure=?");
+            pre.setString(1, Arrival);
+            pre.setString(2, Departure);
+
+            rs = pre.executeQuery();
+            ResultSetMetaData RSMD = rs.getMetaData();
+            int cc = RSMD.getColumnCount();
+            DefaultTableModel DFT = (DefaultTableModel) table.getModel();
+
+            while (rs.next()) {
+                Vector v = new Vector();
+                v.add(rs.getString("FlightID"));
+                v.add(rs.getString("FlightName"));
+                v.add(rs.getString("Arrival"));
+                v.add(rs.getString("Departure"));
+                v.add(rs.getString("Date"));
+                v.add(rs.getString("Duration"));
+                DFT.addRow(v);
+            }
+
+        } catch (ClassNotFoundException ex) {
+            System.getLogger(BookTicket.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (SQLException ex) {
+            System.getLogger(BookTicket.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }// GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            String Customer = CustID.getText();
+
+            Connection con;
+            PreparedStatement pre;
+            ResultSet rs;
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            con = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/Airline_Project",
+                    "root",
+                    "Nishant@#12");
+            pre = con.prepareStatement("Select*from customer where CustomerID=?");
+            pre.setString(1, Customer);
+            rs = pre.executeQuery();
+            if (rs.next() != false) {
+                firstName.setText(rs.getString("FirstName"));
+                lastName.setText(rs.getString("LastName"));
+                contact.setText(rs.getString("Contact"));
+                gender.setText(rs.getString("Gender"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Customer Does not Exist");
+            }
+
+        } catch (ClassNotFoundException ex) {
+            System.getLogger(BookTicket.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (SQLException ex) {
+            System.getLogger(BookTicket.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }// GEN-LAST:event_jButton2ActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_tableMouseClicked
+        try {
+            int col = 0;
+            int row = table.getSelectedRow();
+            flightID = table.getModel().getValueAt(row, col).toString();
+
+            Connection con;
+            PreparedStatement pre;
+            ResultSet rs;
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            con = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/Airline_Project",
+                    "root",
+                    "Nishant@#12");
+            pre = con.prepareStatement("Select Fare from Flight where FlightID=?");
+            pre.setString(1, flightID);
+            rs = pre.executeQuery();
+            rs.next();
+            fare.setText(rs.getString("Fare"));
+            loadSeats(flightID);
+
+        } catch (ClassNotFoundException ex) {
+            System.getLogger(BookTicket.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (SQLException ex) {
+            System.getLogger(BookTicket.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }// GEN-LAST:event_tableMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
+        int Fare = Integer.parseInt(fare.getText());
+        int NoOfTickets = Integer.parseInt(totalticket.getText());
+        int ans = Fare * NoOfTickets;
+        Ans.setText(String.valueOf(ans));
+    }// GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            String CustomerID = CustID.getText();
+            String FirstName = firstName.getText();
+            String LastName = lastName.getText();
+            String Contact = contact.getText();
+            String Gender = gender.getText();
+            String Arrival = arrival.getSelectedItem().toString();
+            String Departure = departure.getSelectedItem().toString();
+
+            if (selectedSeats.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please select seats!");
+                return;
+            }
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection con = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/Airline_Project",
+                    "root",
+                    "Nishant@#12");
+
+            int totalFare = Integer.parseInt(Ans.getText());
+
+            // ✅ FIX: Har seat ke liye getNextTicketID() se fresh unique TicketID lo
+            for (String seat : selectedSeats) {
+                String currentTicketID = getNextTicketID(con);
+
+                PreparedStatement pre = con.prepareStatement(
+                        "INSERT INTO ticket(TicketID,FlightID,CustomerID,Arrival,Departure,FirstName,LastName,Contact,Gender,total_fare,seat_number) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+
+                pre.setString(1, currentTicketID);
+                pre.setString(2, flightID);
+                pre.setString(3, CustomerID);
+                pre.setString(4, Arrival);
+                pre.setString(5, Departure);
+                pre.setString(6, FirstName);
+                pre.setString(7, LastName);
+                pre.setString(8, Contact);
+                pre.setString(9, Gender);
+                pre.setInt(10, totalFare);
+                pre.setString(11, seat);
+                pre.executeUpdate();
+
+                // Mark seat as booked
+                PreparedStatement pst2 = con.prepareStatement(
+                        "UPDATE seats SET is_booked=TRUE WHERE flight_id=? AND seat_number=?");
+                pst2.setString(1, flightID);
+                pst2.setString(2, seat);
+                pst2.executeUpdate();
+            }
+
+            JOptionPane.showMessageDialog(null, "Ticket Booked Successfully!");
+            selectedSeats.clear();
+            AutoID();
+            this.setVisible(false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Booking Failed: " + e.getMessage()); // ✅ Error visible hoga
+        }
+    }// GEN-LAST:event_jButton4ActionPerformed
+
+    private void tableAncestorAdded(javax.swing.event.AncestorEvent evt) {// GEN-FIRST:event_tableAncestorAdded
+    }// GEN-LAST:event_tableAncestorAdded
+
+    private void arrivalActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_arrivalActionPerformed
+    }// GEN-LAST:event_arrivalActionPerformed
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Ans;
+    private javax.swing.JTextField CustID;
+    private javax.swing.JLabel ID;
+    private javax.swing.JComboBox<String> arrival;
+    private javax.swing.JTextField contact;
+    private javax.swing.JComboBox<String> departure;
+    private javax.swing.JTextField discount;
+    private javax.swing.JTextField fare;
+    private javax.swing.JTextField firstName;
+    private javax.swing.JTextField gender;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField lastName;
+    private javax.swing.JPanel seatPanel;
+    private javax.swing.JTable table;
+    private javax.swing.JTextField totalticket;
+    // End of variables declaration//GEN-END:variables
+    
+    public void loadSeats(String flightId) {
+        try {
+            seatPanel.removeAll();
+            seatPanel.setLayout(new java.awt.GridLayout(4, 5, 10, 10));
+
+            Connection con = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/Airline_Project",
+                    "root",
+                    "Nishant@#12");
+
+            PreparedStatement pst = con.prepareStatement(
+                    "SELECT seat_number, is_booked FROM seats WHERE flight_id=?");
+            pst.setString(1, flightId);
+
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String seat = rs.getString("seat_number");
+                boolean booked = rs.getBoolean("is_booked");
+
+                javax.swing.JButton btn = new javax.swing.JButton(seat);
+
+                if (booked) {
+                    btn.setBackground(java.awt.Color.RED);
+                    btn.setEnabled(false);
+                } else {
+                    btn.setBackground(java.awt.Color.GREEN);
+                    btn.addActionListener(e -> {
+                        int totalTickets = Integer.parseInt(totalticket.getText());
+
+                        // If already selected → unselect
+                        if (selectedSeats.contains(seat)) {
+                            selectedSeats.remove(seat);
+                            btn.setBackground(Color.GREEN);
+                            return;
+                        }
+
+                        // If limit reached → stop
+                        if (selectedSeats.size() >= totalTickets) {
+                            JOptionPane.showMessageDialog(null,
+                                    "You can select only " + totalTickets + " seats");
+                            return;
+                        }
+
+                        // Select seat
+                        selectedSeats.add(seat);
+                        btn.setBackground(Color.RED);
+                    });
+                }
+
+                seatPanel.add(btn);
+            }
+
+            seatPanel.revalidate();
+            seatPanel.repaint();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
