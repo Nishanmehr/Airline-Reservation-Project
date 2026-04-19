@@ -35,10 +35,11 @@ public final class AddCustomer extends javax.swing.JInternalFrame {
 
         Class.forName("com.mysql.cj.jdbc.Driver");
 
+        String dbPassword = System.getenv("DB_PASSWORD");
         con = DriverManager.getConnection(
                 "jdbc:mysql://localhost/airline_project",
                 "root",
-                "Nishant@#12"
+                dbPassword
         );
 
         pre = con.prepareStatement("SELECT MAX(CustomerID) FROM customer");
@@ -355,10 +356,11 @@ public final class AddCustomer extends javax.swing.JInternalFrame {
             
             Class.forName("com.mysql.cj.jdbc.Driver");
             
+            String dbPassword = System.getenv("DB_PASSWORD");
             con = DriverManager.getConnection(
                     "jdbc:mysql://localhost/airline_project",
                     "root",
-                    "Nishant@#12"
+                    dbPassword
             );
             pre=con.prepareStatement("insert into customer(CustomerID,FirstName,LastName,Passport,NationalId,Address,Contact,Gender,DOB)values(?,?,?,?,?,?,?,?,?)");
             pre.setString(1, CustomerId);

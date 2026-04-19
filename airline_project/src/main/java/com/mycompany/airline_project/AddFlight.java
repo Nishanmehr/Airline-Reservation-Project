@@ -36,10 +36,11 @@ public final class AddFlight extends javax.swing.JInternalFrame {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
 
+            String dbPassword = System.getenv("DB_PASSWORD");
             con = DriverManager.getConnection(
                     "jdbc:mysql://localhost/Airline_Project",
                     "root",
-                    "Nishant@#12"
+                    dbPassword
             );
 
             pre = con.prepareStatement("SELECT MAX(FlightID) FROM flight");
@@ -305,10 +306,11 @@ public final class AddFlight extends javax.swing.JInternalFrame {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
 
+            String dbPassword = System.getenv("DB_PASSWORD");
             con = DriverManager.getConnection(
                     "jdbc:mysql://localhost/Airline_Project",
                     "root",
-                    "Nishant@#12"
+                    dbPassword
             );
 
             // Step 1: Flight insert karo

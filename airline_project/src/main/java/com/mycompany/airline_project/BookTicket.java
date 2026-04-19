@@ -40,10 +40,11 @@ public class BookTicket extends javax.swing.JInternalFrame {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
 
+            String dbPassword = System.getenv("DB_PASSWORD");
             con = DriverManager.getConnection(
                     "jdbc:mysql://localhost/Airline_Project",
                     "root",
-                    "Nishant@#12");
+                    dbPassword);
 
             pre = con.prepareStatement("SELECT MAX(TicketID) FROM Ticket");
             rs = pre.executeQuery();
@@ -548,10 +549,11 @@ public class BookTicket extends javax.swing.JInternalFrame {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
 
+            String dbPassword = System.getenv("DB_PASSWORD");
             con = DriverManager.getConnection(
                     "jdbc:mysql://localhost/Airline_Project",
                     "root",
-                    "Nishant@#12");
+                    dbPassword);
             pre = con.prepareStatement("SELECT * FROM Flight WHERE Arrival=? and Departure=?");
             pre.setString(1, Arrival);
             pre.setString(2, Departure);
@@ -589,10 +591,11 @@ public class BookTicket extends javax.swing.JInternalFrame {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
 
+                String dbPassword = System.getenv("DB_PASSWORD");
             con = DriverManager.getConnection(
                     "jdbc:mysql://localhost/Airline_Project",
                     "root",
-                    "Nishant@#12");
+                    dbPassword);
             pre = con.prepareStatement("Select*from customer where CustomerID=?");
             pre.setString(1, Customer);
             rs = pre.executeQuery();
@@ -624,10 +627,11 @@ public class BookTicket extends javax.swing.JInternalFrame {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
 
+                String dbPassword = System.getenv("DB_PASSWORD");
             con = DriverManager.getConnection(
                     "jdbc:mysql://localhost/Airline_Project",
                     "root",
-                    "Nishant@#12");
+                    dbPassword);
             pre = con.prepareStatement("Select Fare from Flight where FlightID=?");
             pre.setString(1, flightID);
             rs = pre.executeQuery();
@@ -666,10 +670,11 @@ public class BookTicket extends javax.swing.JInternalFrame {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
 
+            String dbPassword = System.getenv("DB_PASSWORD");
             Connection con = DriverManager.getConnection(
                     "jdbc:mysql://localhost/Airline_Project",
                     "root",
-                    "Nishant@#12");
+                    dbPassword);
 
             int totalFare = Integer.parseInt(Ans.getText());
 
@@ -764,10 +769,11 @@ public class BookTicket extends javax.swing.JInternalFrame {
             seatPanel.removeAll();
             seatPanel.setLayout(new java.awt.GridLayout(4, 5, 10, 10));
 
+            String dbPassword = System.getenv("DB_PASSWORD");
             Connection con = DriverManager.getConnection(
                     "jdbc:mysql://localhost/Airline_Project",
                     "root",
-                    "Nishant@#12");
+                    dbPassword);
 
             PreparedStatement pst = con.prepareStatement(
                     "SELECT seat_number, is_booked FROM seats WHERE flight_id=?");

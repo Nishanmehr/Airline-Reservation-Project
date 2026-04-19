@@ -33,10 +33,11 @@ public class AdminDashboard extends javax.swing.JInternalFrame {
 
         Class.forName("com.mysql.cj.jdbc.Driver");
 
+        String dbPassword = System.getenv("DB_PASSWORD");
         con = DriverManager.getConnection(
             "jdbc:mysql://localhost/Airline_Project",
             "root",
-            "Nishant@#12"
+            dbPassword
         );
 
         // Total Flights
